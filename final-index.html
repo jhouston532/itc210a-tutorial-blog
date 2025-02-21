@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  
+  <title>My First Local Storage!</title>
+    
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="readList()">
+
+  <h1>My First Local Storage!</h1>
+
+  <ol class="list">
+
+  </ol>
+
+  <form class="form-create-task" onsubmit="formSubmit(event)">        
+    <input type="text" name="text" class="form-text-box" required/>
+    <br>
+
+    <button class="select">Add Item</button>
+    <br>
+  </form>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
