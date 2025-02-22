@@ -17,12 +17,16 @@
 
   </ol>
 
-  <form class="form-create-task" onsubmit="formSubmit(event)">        
+  <form onsubmit="formSubmit(event)">        
     <input type="text" name="text" class="form-text-box" required/>
     <br>
 
     <button class="select">Add Item</button>
     <br>
+  </form>
+
+  <form onsubmit="deleteSubmit(event)">
+    <button>Delete List</button>
   </form>
 
   <script src="script.js"></script>

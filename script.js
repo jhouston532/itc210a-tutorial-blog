@@ -56,28 +56,14 @@ function readList(){
     //  if not, do nothing
     let storageCheck = localStorage.getItem('list');
     if (!storageCheck){
-        console.log('No saved list found in local storage'); 
         return;     
     }
 
     //  set the list to the list that it gets out of storage;
     list = readStorage(); 
 
-    list.forEach(
-        itemData =>{
-          //  data becomes an Item object
-          let item = new Item(itemData); 
-
-          //  object toHTML is called
-          let itemHTML = item.toHTML(); 
-
-          //  insert the html into the inner html of the element
-          listElement.innerHTML += itemHTML; 
-    
-        }
-    ); // conclude the loop
-
-
+    let htmlContent = list.map(item => item.toHTML()).join("")
+    listElement.innerHTML = htmlContent;
 
     return;
 }
@@ -89,6 +75,9 @@ function deleteList(){
 
     //  set list to an empty array
     list = []; 
+
+    //  save the now-empty list and then load it
+    readList(); 
 
     return; 
 }
@@ -117,5 +106,13 @@ function formSubmit(event){
     //  then take the saved list and load it into the HTML
     readList(); 
     
+    //  clear the form
+    event.currentTarget.reset();  
+
     return; 
+}
+
+function deleteSubmit(event){
+    event.preventDefault(); 
+    deleteList(); 
 }
