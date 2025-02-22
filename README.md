@@ -290,12 +290,6 @@ And now we are done! You now have a working HTML page that interacts with local 
 
 
 
-
-
-
-
-
-
 # References and Resources: 
 https://developer.mozilla.org/en-US/docs/Learn_web_development/ - MDN Web Docs is a high quality source for all things related to web development. It contains a number of useful courses and bits of information. 
 
