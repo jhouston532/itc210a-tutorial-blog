@@ -6,8 +6,7 @@ Jonathan Houston
 
 ## Introduction: 
 
-In this tutorial, we will be learning how to use JavaScript to store data from a webpage on a user’s computer locally. Local storage allows a site to store key-value pairs. This stores a name and a string. It is very useful, as it allows a website to store information on the user’s computer rather than on a database or server. Local storage can be used to remember visits to a website, save half-filled-out form data, and many other useful functions. Each key-value pair can only be 5 MB. 
-
+In this tutorial, we will be learning how to use JavaScript to store data from a webpage on a user’s computer locally. 
 This will primarily be using HTML and Javascript, along with a sprinkling of CSS. 
 
 HTML, “HyperText Markup Language,” is used to create the bones of a webpage. When you visit a website, your browser receives data from an HTML page (a file with the .html extension) that tells it where the basic parts of a webpage go. 
@@ -16,9 +15,10 @@ JavaScript is a programming language that can be in an HTML page or included in 
 
 CSS is a programming language that gives the HTML style. By default, HTML will be a rather ugly black and white with boring fonts and simple buttons. CSS allows you to spice that up by adding style to the HTML. Like JavaScript, it can be located inside the HTML file or in a CSS file (with the .css extension) and linked in the HTML file. 
 
-JSON is an acronym for “JavaScript Object Notation.” It is used to represent data objects. In this tutorial, we will be using JSON as a go-between for local storage, which can only store strings, and useful JavaScript class objects. 
+JSON is an acronym for “JavaScript Object Notation.” It is used to represent data objects. Most types of data in JavaScript can be converted into a JSON object, and JSON objects can be easily turned into strings. These strings can then be put into local storage. 
 
-This tutorial presumes you have some experience with HTML and some familiarity with other programming languages. 
+Local storage allows a site to store key-value pairs. This stores a name and a string. It is very useful, as it allows a website to store information on the user’s computer rather than on a database or server. Local storage can be used to remember visits to a website, save half-filled-out form data, and many other useful functions. Each key-value pair can only be 5 MB. Local storage is unique to an individual web page, and can't be accessed by web pages where it wasn't set. 
+
 
 ## Tutorial:
 
@@ -46,7 +46,7 @@ First, let’s set up a basic HTML page. Create a file called “index.html” a
 </html>
 ```
 
-This sets up a basic HTML page that will display “My First Local Storage!” to the screen and to your tab’s title. 
+This sets up a basic HTML page that will display “My First Local Storage!” to the screen and to your browser tab’s title. 
 
 ## List
 Next up, we want to create our list. You can do this two different ways, depending on if you want your list to be numbered or to be sequenced with bullet points. 
@@ -67,10 +67,10 @@ For a bullet point list, use an “unordered list”:
 </ul> 
 ```
 
-This tutorial details the ordered list, but it will work the same for the unordered list. Make sure to put this above the script tags. 
+This tutorial uses the ordered list, but it will work the same for the unordered list. Make sure to put this above the script tags. 
 
 ## HTML Input Forms
-Next, we want to create a way for users to add items to the list. We’re going to do this via a form in the HTML. 
+Next, we want to create a way for users to add items to the list. We’re going to do this via a form in the HTML. We'll also want a button that will delete all items from the list. 
 
 ```
 <form>
@@ -86,13 +86,15 @@ Next, we want to create a way for users to add items to the list. We’re going 
 </form>
 ```
 
-This will create a text box where users can enter the text that they want to add to the list, and a button that will allow them to delete the contents of the list. Neither of these will do anything at the moment. We will need to add functionality with JavaScript, which we will start on  next. 
+This will create a text box where users can enter the text that they want to add to the list, and a button that will allow them to delete the contents of the list. Neither of these will do anything at the moment. We will make them work with JavaScript, which we will start on next. 
 
 ## JavaScript
 To start on the Javascript, create a file called “script.js” in the same folder as the HTML file. This is the file where we will be doing the bulk of our work. 
 
 ### "Item" class
-The first thing we want to do is create a class object called “Item”. Make sure you note the capital I. In this class, we want to have a constructor and a function to turn the text into valid HTML. 
+The first thing we want to do is create a class object called “Item”. Classes let you create a custom variable type that has specific properties.  
+
+Make sure you note the capital I. In this class, we want to have a constructor (a function that puts the item together) and a function to turn the text into valid HTML. 
 
 ```
 class Item {
@@ -108,10 +110,10 @@ class Item {
 }
 ```
 
-The constructor will be called whenever a new Item is created. It creates a variable “text” that belongs to the Item, set to the text that was submitted in the constructor. The toHTML function is a function that will turn the text of the task into a valid bit of HTML. 
+The constructor will be called whenever a new Item is created. It creates a variable “text” that belongs to the Item, set to the text that was submitted in the constructor. The toHTML function is a function that will turn the text of the task into a valid bit of HTML code that can be displayed on the HTML page. 
 
-### Definition 
-Next, we will create an array of Items. This will be the variable where we will be storing all of the Items, and what we will be storing as a JSON  object. Since we don’t want any items to be in the list, we create it like this: 
+### Definition of the List
+Next, we will create an array of Items. An array is a list of variables that are indexed starting from 0. This will be the variable where we will be storing all of the Items, and what we will be storing as a JSON  object. Since we don’t want any items to be in the list, we create it like this: 
 
 `let list = [];` 
 
@@ -124,12 +126,13 @@ let first = new Item({
 
 list.push(first);
 ```
+This creates a new Item called first, then pushes it to the end of the list array. 
 
 ## Functions
-Next, we want to write the functions that will run the list. First, let’s create the function that saves the list array in local storage. Local storage can only hold strings. 
+Next, we want to write the functions that will make the list work. First, let’s create the function that saves the list array in local storage.
 
 ### Store Data in Local Storage
-In order to store data objects, we have to convert the array to a JSON object, and then ‘string-ify’ it. Let’s call this function the update storage function. 
+Local storage can only store key-value pairs. That means that it can store a 'string,' or list of characters, which has a specific name.
 
 ```
 function updateStorage() {
@@ -172,7 +175,7 @@ This function begins by creating a const variable named “storage.” The const
 The function then creates a new variable called “result.” It uses the .map function on the storage variable, which maps the contents of the array onto other variables. When called like this, it iterates over the entire list in storage, placing each JSON object into an Item object. It declares each individual item in the array as listData, then creates an Item based on listData. This new item is then added to the result array. If the listData was blank, it would do nothing. Once the map function is completed, it has created an array of objects that is identical to the list, and sets the result variable to it. 
 It then returns the result variable. 
 
-### Putting 
+### Reading the List into HTML 
 Next, we need to make a function to insert the HTML of the list items into the index page. For this, we will need to go back to the index page. We will add the following to the opening tag of the list like so: 
 
 ```<ol class="list">```
@@ -208,7 +211,9 @@ First, we create a unique type of variable in “listElement.” The “document
 Then, we check to make sure there is data saved in the local storage. If there isn’t any, it ends the function. 
 If there is something saved in the local storage, it sets the list variable to it via the readStorage function. Then, we map out the html of each item in the list, join them together without spaces, then set the result to a variable called htmlContent. It’s a long string of HTML code. 
 We then set the inner HTML of the listElement to the htmlContent variable. After that, we reset the form. This clears the text box, meaning that what you typed into it would be erased after being added to the list. 
+This doesn't effect the actual HTML page, but instead the Document Object Model, which is how the browser displays the web page. The DOM is a rather complex topic which you can learn more about in a guide linked in the References and Resources section. 
 
+### List Deletion
 Next, we want to write a function that will delete the list. 
 
 ```
@@ -227,6 +232,8 @@ This function deletes the locally stored list item, sets the list variable to an
 
 We have the create and delete buttons on the index page, but they don’t add or delete anything. We need to write a pair of functions that will enable the item entry and delete list forms to create new items and delete them. 
 
+
+### Linking JS and HTML form
 The first function we want to write is as follows: 
 
 ```
@@ -264,6 +271,7 @@ To connect this function with the form submission, we need to return to our inde
 
 This will run the associated function whenever the form is submitted.
 
+### Linking JS and HTML Delete Button
 We also want to add a similar function to the delete form. The function for that is far simpler than for submitting an item, since all it needs to do is prevent the default behavior and call the deleteList function. 
 
 ```
@@ -277,6 +285,7 @@ Add an on submit trigger for this function to the form wrapped around the delete
 
 ```<form onsubmit="deleteSubmit(event)">```
 
+# Conclusion
 And now we are done! You now have a working HTML page that interacts with local storage and uses JSON objects. This is a good first step in making a website. If you want to learn more, look up tutorials on preventing cross-site scripting and setting up CSS. Several are linked in the references section.
 
 
@@ -287,11 +296,15 @@ And now we are done! You now have a working HTML page that interacts with local 
 
 
 
-References and Resources: 
+# References and Resources: 
 https://developer.mozilla.org/en-US/docs/Learn_web_development/ - MDN Web Docs is a high quality source for all things related to web development. It contains a number of useful courses and bits of information. 
 
 https://www.theserverside.com/definition/JSON-Javascript-Object-Notation - A highly readable explanation of what JSON is. While it doesn’t discuss specific uses, this article is useful for those who have no prior experience with JSON. 
 
-https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage - MDN Web Docs’ on how to use local storage in JavaScript and what it does. This page is very brief, concise, and to the point. 
+https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage - MDN Web Docs’ article on local storage in JavaScript and what it does. This page is very brief, concise, and to the point. 
+
+https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API - MDN Web Docs' walkthrough of how to use the web storage API. This goes into more detail on how to use local storage than the above article on local storage. 
+
+https://flaviocopes.com/dom/ - An article detailing the Document Object Model, which is only briefly touched on in this tutorial. 
 
 
